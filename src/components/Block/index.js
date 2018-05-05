@@ -14,7 +14,14 @@ class Block extends Component {
         let block_hash = this.props.match.params.blockHash;
         this.getBlockState(block_hash);
     }
-
+    async componentWillReceiveProps(nextProps) {
+        const block_hash_old = this.props.match.params.blockHash;
+        const block_hash_new = nextProps.match.params.blockHash;
+        // compare old and new URL parameter (block hash)
+        // if different, reload state using web3
+        if (block_hash_old !== block_hash_new)
+        this.getBlockState(block_hash_new);
+      }
     async getBlockState(block_hash) {
         console.log('block hash= ' + block_hash);
         //Use web3 to get hte Block object
